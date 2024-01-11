@@ -54,8 +54,8 @@ async def get_context(
     embedding = res.data[0].embedding
     # Search for matching Vectors
     results = index.query(embedding, top_k=6, include_metadata=True).to_dict()
-    # Filter out metadata fron search result
-    context = [match["metadata"]["text"] for match in results["matches"]]
+    # Filter out metadata from search result and include 'text' and 'url'
+    context = [{"text": match["metadata"]["text"], "url": match["metadata"]["url"]} for match in results["matches"]]
     # Retrun context
     return context
 
